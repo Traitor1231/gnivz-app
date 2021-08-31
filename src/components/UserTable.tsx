@@ -1,44 +1,26 @@
 import React, { FC, useState, useEffect } from "react";
 
-import axios from "axios";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { makeStyles } from "@material-ui/core/styles";
 import { EmailPopup } from "./EmailPopup";
 import { Loader } from "./Loader";
-
-const useStyles = makeStyles({
-  row: {
-    "&:nth-of-type(odd)": {
-      backgroundColor: "#f3f3f3",
-    },
-  },
-  head: {
-    backgroundColor: "#000000",
-    color: "#ffffff",
-    fontSize: 16,
-  },
-});
+import { getFirstHundredUsers } from "../utils/getFirstHundredUsers";
+import { User } from "../interfaces/User";
+import { useUserTableStyles } from "../styles/UserTableStyles";
 
 export const UserTable: FC = () => {
-  const classes = useStyles();
-  const [usersData, setUsersData] = useState([]);
+  const classes = useUserTableStyles();
+  const [usersData, setUsersData] = useState<any[]>([]);
 
   useEffect(() => {
-    axios
-      .get(`https://gorest.co.in/public-api/users`)
-      .then((result) => setUsersData(result.data.data));
+    getFirstHundredUsers().then((result) =>
+      setUsersData(result.map((resItem) => resItem.data.data).flat())
+    );
   }, []);
-
-  interface User {
-    id: number;
-    name: string;
-    email: string;
-  }
 
   return (
     <React.Fragment>
@@ -73,7 +55,7 @@ export const UserTable: FC = () => {
                 >
                   <TableCell>{user.name}</TableCell>
                   <TableCell>
-                    {<EmailPopup id={user.id} email={user.email} />}
+                    <EmailPopup id={user.id} email={user.email} />
                   </TableCell>
                 </TableRow>
               ))}
