@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core/styles";
 import ClipLoader from "react-spinners/ClipLoader";
 import Container from "@material-ui/core/Container";
 import { FC } from "react";
