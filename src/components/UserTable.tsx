@@ -19,7 +19,13 @@ export const UserTable: FC = () => {
   const classes = useUserTableStyles();
   const [usersData, setUsersData] = useState<any[]>([]);
 
-  useEffect(() => {
+  const getNextUsersData = () => {
+    getUsers(currentPageValue++).then((result) =>
+      setUsersData((prevState) => prevState.concat(result.data.data))
+    );
+  };
+
+  const getFirstHundredUsersData = () => {
     Promise.all([
       getUsers(currentPageValue++),
       getUsers(currentPageValue++),
@@ -29,12 +35,11 @@ export const UserTable: FC = () => {
     ]).then((result) =>
       setUsersData(result.map((resItem) => resItem.data.data).flat())
     );
+  }
+
+  useEffect(() => {
+    getFirstHundredUsersData()
   }, []);
-  const getNextUsersData = () => {
-    getUsers(currentPageValue++).then((result) =>
-      setUsersData((prevState) => prevState.concat(result.data.data))
-    );
-  };
 
   return (
     <React.Fragment>
