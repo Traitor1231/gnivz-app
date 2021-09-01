@@ -1,9 +1,10 @@
 import React, { FC, useState } from "react";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
-import axios from "axios";
 import { EmailPopupProps } from "../interfaces/EmailPopupProps";
 import { useEmailPopupStyles } from "../styles/EmailPopupStyles";
+import { getPostCountByUser } from "../utils/getPostCountByUser";
+import { Box } from "@material-ui/core";
 
 
 export const EmailPopup: FC<EmailPopupProps> = ({ id, email }) => {
@@ -14,8 +15,7 @@ export const EmailPopup: FC<EmailPopupProps> = ({ id, email }) => {
   const [postCount, setPostCount] = useState("");
 
   const onHoverHandler = (id: number) =>
-    axios
-      .get(`https://gorest.co.in/public-api/posts?user_id=${id}`)
+      getPostCountByUser(id)
       .then((result) =>
         setPostCount(`Количество постов: ${result.data.data.length}`)
       );
@@ -28,7 +28,7 @@ export const EmailPopup: FC<EmailPopupProps> = ({ id, email }) => {
         aria-owns={anchor ? "mouse-over-popover" : undefined}
         aria-haspopup="true"
       >
-        <span onMouseOver={() => onHoverHandler(id)}>{email}</span>
+        <Box component="span" onMouseOver={() => onHoverHandler(id)}>{email}</Box>
       </Typography>
       {postCount && (
         <Popover

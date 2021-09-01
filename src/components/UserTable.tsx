@@ -11,7 +11,7 @@ import { Loader } from "./Loader";
 import { User } from "../interfaces/User";
 import { useUserTableStyles } from "../styles/UserTableStyles";
 import { BottomScrollListener } from "react-bottom-scroll-listener";
-import { getUsers } from "../utils/getUsers";
+import { getUsersByPageNumber } from "../utils/getUsersByPageNumber";
 
 let currentPageValue = 1;
 
@@ -20,25 +20,25 @@ export const UserTable: FC = () => {
   const [usersData, setUsersData] = useState<any[]>([]);
 
   const getNextUsersData = () => {
-    getUsers(currentPageValue++).then((result) =>
+    getUsersByPageNumber(currentPageValue++).then((result) =>
       setUsersData((prevState) => prevState.concat(result.data.data))
     );
   };
 
   const getFirstHundredUsersData = () => {
     Promise.all([
-      getUsers(currentPageValue++),
-      getUsers(currentPageValue++),
-      getUsers(currentPageValue++),
-      getUsers(currentPageValue++),
-      getUsers(currentPageValue++),
+      getUsersByPageNumber(currentPageValue++),
+      getUsersByPageNumber(currentPageValue++),
+      getUsersByPageNumber(currentPageValue++),
+      getUsersByPageNumber(currentPageValue++),
+      getUsersByPageNumber(currentPageValue++),
     ]).then((result) =>
       setUsersData(result.map((resItem) => resItem.data.data).flat())
     );
-  }
+  };
 
   useEffect(() => {
-    getFirstHundredUsersData()
+    getFirstHundredUsersData();
   }, []);
 
   return (
