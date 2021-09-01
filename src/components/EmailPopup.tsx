@@ -19,9 +19,11 @@ export const EmailPopup: FC<EmailPopupProps> = ({ id, email }) => {
 
   return (
     <Box
-      onMouseEnter={(e) => setAnchor(e.currentTarget)}
+      onMouseEnter={(e) => {
+        onHoverHandler(id)
+        setAnchor(e.currentTarget)
+      }}
       onMouseLeave={() => setAnchor(null)}
-      onMouseOver={() => onHoverHandler(id)}
       component="span"
     >
       {[email, postCount && (
