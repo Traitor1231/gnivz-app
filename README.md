@@ -1,5 +1,9 @@
 # GNIVZ-APP
 
+## ONLINE APP 
+
+Heroku:https://gnivz-app.herokuapp.com/ <br />
+
 ## Local installation
 
 ```
