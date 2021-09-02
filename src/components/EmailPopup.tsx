@@ -28,6 +28,7 @@ export const EmailPopup: FC<EmailPopupProps> = ({ id, email }) => {
     >
       {[email, postCount && (
         <Popover
+          key={id}
           className={classes.popover}
           classes={{
             paper: classes.paper,
