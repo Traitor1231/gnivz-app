@@ -8,7 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { EmailPopup } from "./EmailPopup";
 import { Loader } from "./Loader";
-import { User } from "../interfaces/User";
+import { IUser } from "../interfaces/User";
 import { useUserTableStyles } from "../styles/UserTableStyles";
 import { BottomScrollListener } from "react-bottom-scroll-listener";
 import { getUsersByPageNumber } from "../utils/getUsersByPageNumber";
@@ -17,7 +17,7 @@ let currentPageValue = 1;
 
 export const UserTable: FC = () => {
   const classes = useUserTableStyles();
-  const [usersData, setUsersData] = useState<any[]>([]);
+  const [usersData, setUsersData] = useState<IUser[]>([]);
 
   const getNextUsersData = () => {
     getUsersByPageNumber(currentPageValue++).then((result) =>
@@ -66,7 +66,7 @@ export const UserTable: FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {usersData.map((user: User) => (
+                {usersData.map((user: IUser) => (
                   <TableRow
                     classes={{
                       root: classes.row,

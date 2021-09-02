@@ -12,15 +12,15 @@ export const EmailPopup: FC<EmailPopupProps> = ({ id, email }) => {
   );
   const [postCount, setPostCount] = useState("");
 
-  const onHoverHandler = (id: number) =>
+  const onHoverHandler = () =>
     getPostCountByUser(id).then((result) =>
       setPostCount(`Количество постов: ${result.data.data.length}`)
-    );
+  );
 
   return (
     <Box
       onMouseEnter={(e) => {
-        onHoverHandler(id)
+        !postCount && onHoverHandler()
         setAnchor(e.currentTarget)
       }}
       onMouseLeave={() => setAnchor(null)}
